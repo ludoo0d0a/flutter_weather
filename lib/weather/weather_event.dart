@@ -13,3 +13,12 @@ class FetchWeather extends WeatherEvent {
       : assert(city != null),
         super([city]);
 }
+
+class RefreshWeather extends WeatherEvent {
+  final String city;
+
+  RefreshWeather({@required this.city})
+      : assert(city != null),
+        super([city]);
+}
+
