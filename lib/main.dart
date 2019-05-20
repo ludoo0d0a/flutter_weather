@@ -7,6 +7,7 @@ import 'package:flutter_weather/widgets/weather.dart';
 
 import 'package:flutter_weather/widgets/widgets.dart';
 import 'package:flutter_weather/theme/theme.dart';
+import 'package:flutter_weather/settings/settings.dart';
 
 import 'repositories/weather_api_client.dart';
 import 'package:http/http.dart' as http;
@@ -36,29 +37,34 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   ThemeBloc _themeBloc = ThemeBloc();
+  SettingsBloc _settingsBloc = SettingsBloc();
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      bloc: _themeBloc,
-      child: BlocBuilder(
-        bloc: _themeBloc,
-        builder: (_, ThemeState themeState) {
-          return MaterialApp(
-            title: 'Flutter Weather',
-            theme: themeState.theme,
-            home: Weather(
-              weatherRepository: widget.weatherRepository,
-            ),
-          );
-        },
-      ),
+    return BlocProviderTree(
+      blocProviders: [
+        BlocProvider<ThemeBloc>(bloc: _themeBloc),
+        BlocProvider<SettingsBloc>(bloc: _settingsBloc),
+      ],
+        child: BlocBuilder(
+          bloc: _themeBloc,
+          builder: (_, ThemeState themeState) {
+            return MaterialApp(
+              title: 'Flutter Weather',
+              theme: themeState.theme,
+              home: Weather(
+                weatherRepository: widget.weatherRepository,
+              ),
+            );
+          },
+        ),
     );
   }
 
   @override
   void dispose() {
     _themeBloc.dispose();
+    _settingsBloc.dispose();
     super.dispose();
   }
 }

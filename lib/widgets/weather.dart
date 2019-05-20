@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weather/settings/settings_widget.dart';
 import 'package:flutter_weather/theme/theme.dart';
 import 'package:flutter_weather/widgets/gradient_container.dart';
 
 import 'package:flutter_weather/widgets/widgets.dart';
 import 'package:flutter_weather/repositories/repositories.dart';
-//import 'package:flutter_weather/blocs/blocs.dart';
 import 'package:flutter_weather/weather/weather.dart';
 
 class Weather extends StatefulWidget {
@@ -39,6 +39,17 @@ class _WeatherState extends State<Weather> {
       appBar: AppBar(
         title: Text('Flutter Weather'),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Settings(),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () async {
